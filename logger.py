@@ -10,3 +10,4 @@ user_name = 'jeter.lin'
 password = '3qqLogan'
 
 user_field = driver.find_element_by_id('username').text
+pw_field = driver.find_element_by_id('password').text
