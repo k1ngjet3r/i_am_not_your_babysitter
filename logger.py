@@ -21,8 +21,11 @@ class Logger:
             print('please enter a valid date or correct date format ')
 
     def logging(self):
+        sd = self.date_formater()
+        print('date format checked')
+
         # Open Chrome and go to RedMine
-        print('Opening the RedMine...')
+        print('Opening the RedMine via Chrome...')
         driver = webdriver.Chrome()
         driver.get(
             'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
@@ -66,7 +69,6 @@ class Logger:
             driver.find_element_by_id('time_entry_activity_id'))
         select_activity.select_by_index(8)
 
-        sd = self.date_formater()
         for i in range(self.duration):
             sd = sd + dt.timedelta(days=i)
             print('Enter date -> {}'.format(sd))
