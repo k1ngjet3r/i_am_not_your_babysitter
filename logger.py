@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.by import By
 import time
 from datetime import datetime
 
@@ -47,9 +48,10 @@ select_activity = Select(driver.find_element_by_id('time_entry_activity_id'))
 select_activity.select_by_index(8)
 
 print('Enter date -> 2020-12-14')
-date_field = driver.find_elements_by_id('time_entry_spent_on')
-date_field.send_keys('2020-12-14')
+driver.find_element_by_id('time_entry_spent_on').clear()
+driver.find_element_by_id('time_entry_spent_on').send_keys('2020-12-14')
+
 
 # print('pressing the Save buttom')
 # save_but = driver.find_elements_by_id('commit')
-# save_but.send_keys(Keys.RETURN)
+# save_but.send_keys(Keys.RETURN)-
