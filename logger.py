@@ -16,14 +16,17 @@ class Logger:
     def date_formater(self):
         try:
             s = self.start_date
-            return dt.datetime(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]))
+            return dt.date(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]))
         except:
             print('please enter a valid date or correct date format ')
         
     def connection(self):
-        driver = webdriver.Chrome()
-        driver.get(
-            'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
+        try:
+            driver = webdriver.Chrome()
+            driver.get(
+                'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
+        except:
+            print('Please check your WiFi setting, you need to connect your WiFi to tpeap-11F-GM-5G')
 
     def logging(self):
         sd = self.date_formater()
@@ -80,7 +83,7 @@ class Logger:
             driver.find_element_by_id('time_entry_spent_on').clear()
             driver.find_element_by_id('time_entry_spent_on').send_keys(str(sd))
 
-            save_but = driver.find_elements_by_id('commit')
+            save_but = driver.find_elements_by_xpath('/html/body/div/div/div[3]/div[2]/form/input[2]')
             save_but.send_keys(Keys.RETURN)
 
 
