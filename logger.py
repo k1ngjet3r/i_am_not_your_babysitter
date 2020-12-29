@@ -13,20 +13,26 @@ class Logger:
         self.start_date = str(start_date)
         self.duration = int(duration)
 
+    def credential(self):
+        username = input('Enter your username: ')
+        password = input('and your password: ')
+        return username, password
+
     def date_formater(self):
         try:
             s = self.start_date
             return dt.date(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]))
         except:
             print('please enter a valid date or correct date format ')
-        
+
     def connection(self):
         try:
             driver = webdriver.Chrome()
             driver.get(
                 'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
         except:
-            print('Please check your WiFi setting, you need to connect your WiFi to tpeap-11F-GM-5G')
+            print(
+                'Please check your WiFi setting, you need to connect your WiFi to tpeap-11F-GM-5G')
 
     def logging(self):
         sd = self.date_formater()
@@ -47,9 +53,10 @@ class Logger:
         loggin_but = driver.find_element_by_xpath(
             '/html/body/div/div/div[3]/div[2]/div/form/table/tbody/tr[4]/td[2]/input')
         loggin_but.send_keys(Keys.RETURN)
-        
+
         for i in range(self.duration):
-            driver.get('http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new')
+            driver.get(
+                'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new')
             ed = sd + dt.timedelta(days=i)
 
             # Enter detail
@@ -59,13 +66,15 @@ class Logger:
 
             driver.find_element_by_id('time_entry_hours').send_keys('8')
 
-            driver.find_element_by_id('time_entry_working_city').send_keys('Taipei')
+            driver.find_element_by_id(
+                'time_entry_working_city').send_keys('Taipei')
 
             select_activity = Select(
                 driver.find_element_by_id('time_entry_activity_id'))
             select_activity.select_by_index(8)
 
-            driver.find_element_by_id('time_entry_spent_on').send_keys(Keys.ENTER)
+            driver.find_element_by_id(
+                'time_entry_spent_on').send_keys(Keys.ENTER)
 
             print('complete logging day {}/{}'.format(i+1, self.duration))
             print('---------------------------------------')
