@@ -72,5 +72,5 @@ class Logger:
             time.sleep(5)
         print('Log time completed.')
 
-log = Logger('', '', '20201228', 4)
-log.logging()
+# log = Logger('', '', '20201228', 4)
+# log.logging()
