@@ -19,6 +19,11 @@ class Logger:
             return dt.datetime(year=int(s[0:4]), month=int(s[4:6]), day=int(s[6:8]))
         except:
             print('please enter a valid date or correct date format ')
+        
+    def connection(self):
+        driver = webdriver.Chrome()
+        driver.get(
+            'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
 
     def logging(self):
         sd = self.date_formater()
@@ -77,3 +82,7 @@ class Logger:
 
             save_but = driver.find_elements_by_id('commit')
             save_but.send_keys(Keys.RETURN)
+
+
+log = Logger('jeter.lin', '3qqLogan', '20201214', 5)
+log.logging()
