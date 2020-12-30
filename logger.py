@@ -7,17 +7,28 @@ import datetime as dt
 
 
 class Logger:
-    def __init__(self, username, password, start_date, duration):
-        self.username = str(username)
-        self.password = str(password)
+    def __init__(self, start_date, duration):
+        # self.username = str(username)
+        # self.password = str(password)
         self.start_date = str(start_date)
         self.duration = int(duration)
 
-    def credential(self):
+    def log_in(self):
         username = input('Enter your username: ')
         password = input('and your password: ')
-        return username, password
+        print('Entering the user info...')
 
+        try:
+            user_field = driver.find_element_by_id('username')
+            user_field.send_keys(username)
+            pw_field = driver.find_element_by_id('password')
+            pw_field.send_keys(password)
+            loggin_but = driver.find_element_by_xpath(
+                '/html/body/div/div/div[3]/div[2]/div/form/table/tbody/tr[4]/td[2]/input')
+            loggin_but.send_keys(Keys.RETURN)
+        except:
+            print("Wrong username or password!")
+        
     def date_formater(self):
         try:
             s = self.start_date
@@ -27,7 +38,6 @@ class Logger:
 
     def connection(self):
         try:
-            driver = webdriver.Chrome()
             driver.get(
                 'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
         except:
@@ -39,47 +49,53 @@ class Logger:
         print('date format checked')
 
         # Open Chrome and go to RedMine
-        print('Opening the RedMine via Chrome...')
         driver = webdriver.Chrome()
+        print('Opening the RedMine via Chrome...')
+
         driver.get(
             'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
-
-        # Enter Username and password to log into Redmine
-        print('Entering the user info...')
-        user_field = driver.find_element_by_id('username')
-        user_field.send_keys(self.username)
-        pw_field = driver.find_element_by_id('password')
-        pw_field.send_keys(self.password)
-        loggin_but = driver.find_element_by_xpath(
-            '/html/body/div/div/div[3]/div[2]/div/form/table/tbody/tr[4]/td[2]/input')
-        loggin_but.send_keys(Keys.RETURN)
 
         for i in range(self.duration):
             driver.get(
                 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new')
             ed = sd + dt.timedelta(days=i)
+            if ed.weekday() != 5 or ed.weekday != 6:
+                print("{} is passed due to it is weekend".format(str(ed)))
+                print('---------------------------------------')
+                continue
+            
+            else:
+                # Enter detail
+                print('Enter date -> {}'.format(ed))
+                driver.find_element_by_id('time_entry_spent_on').clear()
+                driver.find_element_by_id('time_entry_spent_on').send_keys(str(ed))
 
-            # Enter detail
-            print('Enter date -> {}'.format(ed))
-            driver.find_element_by_id('time_entry_spent_on').clear()
-            driver.find_element_by_id('time_entry_spent_on').send_keys(str(ed))
+                driver.find_element_by_id('time_entry_hours').send_keys('8')
 
-            driver.find_element_by_id('time_entry_hours').send_keys('8')
+                driver.find_element_by_id(
+                    'time_entry_working_city').send_keys('Taipei')
 
-            driver.find_element_by_id(
-                'time_entry_working_city').send_keys('Taipei')
+                select_activity = Select(
+                    driver.find_element_by_id('time_entry_activity_id'))
+                select_activity.select_by_index(8)
 
-            select_activity = Select(
-                driver.find_element_by_id('time_entry_activity_id'))
-            select_activity.select_by_index(8)
+                driver.find_element_by_id(
+                    'time_entry_spent_on').send_keys(Keys.ENTER)
 
-            driver.find_element_by_id(
-                'time_entry_spent_on').send_keys(Keys.ENTER)
+                print('complete logging day {}/{}'.format(i+1, self.duration))
+                print('---------------------------------------')
+            
+            
 
-            print('complete logging day {}/{}'.format(i+1, self.duration))
-            print('---------------------------------------')
-            time.sleep(5)
+
         print('Log time completed.')
 
 # log = Logger('', '', '20201228', 4)
 # log.logging()
+
+log = Logger('20201228', 4)
+log.date_formater()
+driver = webdriver.Chrome()
+
+log.connection()
+log.log_in()
