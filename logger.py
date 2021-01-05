@@ -26,6 +26,7 @@ class Logger:
         except:
             print(
                 'Please check your WiFi setting, you need to connect your WiFi to tpeap-11F-GM-5G')
+            raise SystemExit()
 
         try:
             self.un_pw()
