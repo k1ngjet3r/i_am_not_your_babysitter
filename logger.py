@@ -19,23 +19,27 @@ class Logger:
         return dt.date(year=y, month=m, day=d)
 
     def enter(self):
+        # Open the Redmine using Chrome
         try:
             driver.get(
                 'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
             time.sleep(3)
+        
+        # If the wifi connection is wrong, raise the error message
         except:
-            print(
-                'Please check your WiFi setting, you need to connect your WiFi to tpeap-11F-GM-5G')
+            print("I'm offline so I can't do that!, Please check your WiFi setting!")
             raise SystemExit()
 
+        # For enter the username and password in terminal
         try:
             self.un_pw()
         except:
             print('Fail to log in, please check your username and password')
             self.un_pw()
 
-        start_date = input('The first day you want to log: ')
+        start_date = input('The first day you want to log (format: 20201019): ')
 
+        # Checking the entered date format
         try:
             self.date_validation(start_date)
         except:
@@ -52,6 +56,7 @@ class Logger:
         print("So you want to log {} days started from {} to {}?".format(
             duration, start_date, end_date))
 
+        # Asking the conformation
         conformation = input('Are you sure (y/n)? ')
 
         if conformation == 'y':
@@ -78,25 +83,37 @@ class Logger:
         for i in range(int(duration)):
             driver.get(
                 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new')
+
+            # Entering the date
             ed = start_date + dt.timedelta(days=i)
-            print('Enter date -> {}'.format(ed))
-            driver.find_element_by_id('time_entry_spent_on').clear()
-            driver.find_element_by_id('time_entry_spent_on').send_keys(str(ed))
 
-            driver.find_element_by_id('time_entry_hours').send_keys('8')
+            if ed.weekday() == 5 or ed.weekday() == 6:
+                print('{} is weekend, Pass'.format(ed))
+                print('---------------------------------------')
 
-            driver.find_element_by_id(
-                'time_entry_working_city').send_keys('Taipei')
+            else:
+                print('Enter date -> {}'.format(ed))
+                driver.find_element_by_id('time_entry_spent_on').clear()
+                driver.find_element_by_id('time_entry_spent_on').send_keys(str(ed))
 
-            select_activity = Select(
-                driver.find_element_by_id('time_entry_activity_id'))
-            select_activity.select_by_index(8)
+                # Entering the working time: 8 hours
+                driver.find_element_by_id('time_entry_hours').send_keys('8')
 
-            driver.find_element_by_id(
-                'time_entry_spent_on').send_keys(Keys.ENTER)
+                # Entering the work location: Taipei
+                driver.find_element_by_id(
+                    'time_entry_working_city').send_keys('Taipei')
 
-            print('complete logging day {}/{}'.format(i+1, duration))
-            print('---------------------------------------')
+                # Entering the work type: MY22
+                select_activity = Select(
+                    driver.find_element_by_id('time_entry_activity_id'))
+                select_activity.select_by_index(8)
+
+                driver.find_element_by_id(
+                    'time_entry_spent_on').send_keys(Keys.ENTER)
+
+                print('complete logging day {}/{}'.format(i+1, duration))
+                print('---------------------------------------')
+            
         print('Log time completed.')
 
 
