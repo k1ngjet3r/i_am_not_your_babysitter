@@ -33,6 +33,7 @@ class Logger:
         # For enter the username and password in terminal
         username, password, url = self.un_pw()
         try:
+            print('Entering the user info...')
             user_field = driver.find_element_by_id('username')
             user_field.send_keys(username)
             pw_field = driver.find_element_by_id('password')
@@ -85,7 +86,6 @@ class Logger:
 
         return username, password, url
 
-        print('Entering the user info...')
 
     def logging(self, start_date, duration, url):
         for i in range(int(duration)):
