@@ -4,8 +4,18 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 import time
 import datetime as dt
+import json
 
 driver = webdriver.Chrome()
+
+with open('name.json', 'r') as f:
+    name_list = json.load(f)
+
+with open('national_holiday.json', 'r') as w:
+    exception = json.load(w)
+
+national_holiday = ['2021'+day for day in exception['holiday_2021']]
+make_up = ['2021'+day for day in exception['make_up']]
 
 
 class Logger:
@@ -79,13 +89,14 @@ class Logger:
         username = input('Enter your username: ')
         password = input('and your password: ')
 
-        if username == 'maggie.chang':
+        if username in name_list['my22_leader']:
             url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32612/time_entries/new'
-        else:
+        elif username in name_list['my22']:
             url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new'
+        else:
+            print('the url for my23 was not setup yet!')
 
         return username, password, url
-
 
     def logging(self, start_date, duration, url):
         for i in range(int(duration)):
@@ -94,7 +105,7 @@ class Logger:
             # Entering the date
             ed = start_date + dt.timedelta(days=i)
 
-            if ed.weekday() == 5 or ed.weekday() == 6:
+            if (ed.weekday() == 5 or ed.weekday() == 6 or str(ed) in national_holiday) and str(ed) not in make_up:
                 print('{} is weekend, Pass'.format(ed))
                 print('---------------------------------------')
 
