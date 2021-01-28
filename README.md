@@ -18,6 +18,9 @@ This program used selenium to control web browser (In this case Chrome) to help 
 # How to use?
 When you run the script in terminal, a new window will open and terminal will ask you to enter your username and password. After you entered it, the program will login to RedMine and then it will ask you what is the first day you want to log?, how many days you want to log? It will ask for the confirmation. If confirmed, it then start the log time process.
 
+## Version 3.0
+Store usernames and national holidays in the form of JSON files separately. Now it can also differentiate the leader and non-leader by usernames stored in the JSON file. It's also possible for MY-23 team members to log time using this file, but at current stage it still need to add the url for logging time, this function should be added by version 3.1.
+
 ## Version 2.0
 Want to log the rest of 2021 at once? Now you can do that since it can now differentiate not only weekend, but national holiday and make-up days. Just use it at your own risk!
 
