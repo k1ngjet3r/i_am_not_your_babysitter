@@ -94,7 +94,7 @@ class Logger:
 
         if username in name_list['my22_leader']:
             url_1 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32612/time_entries/new'
-            url_2 = 'www'
+            url_2 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32613/time_entries/new'
             url = [url_1, url_2]
 
         elif username in name_list['my22']:
