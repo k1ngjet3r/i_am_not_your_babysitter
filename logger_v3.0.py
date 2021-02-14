@@ -14,8 +14,8 @@ with open('name.json', 'r') as f:
 with open('national_holiday.json', 'r') as w:
     exception = json.load(w)
 
-national_holiday = ['2021'+day for day in exception['holiday_2021']]
-make_up = ['2021'+day for day in exception['make_up']]
+national_holiday = ['2021-' +day for day in exception['holiday_2021']]
+make_up = ['2021-'+ day for day in exception['make_up']]
 
 
 class Logger:
@@ -79,7 +79,10 @@ class Logger:
         conformation = input('Are you sure (y/n)? ')
 
         if conformation == 'y':
-            self.logging(start_date, duration, url)
+            if username in name_list['my22_leader']:
+                self.leader_logging(start_date, duration, url)
+            else:
+                self.logging(start_date, duration, url)
 
         else:
             print('Goodbye!')
@@ -90,9 +93,13 @@ class Logger:
         password = input('and your password: ')
 
         if username in name_list['my22_leader']:
-            url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32612/time_entries/new'
+            url_1 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32612/time_entries/new'
+            url_2 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32613/time_entries/new'
+            url = [url_1, url_2]
+
         elif username in name_list['my22']:
             url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new'
+
         else:
             print('the url for my23 was not setup yet!')
 
@@ -100,40 +107,54 @@ class Logger:
 
     def logging(self, start_date, duration, url):
         for i in range(int(duration)):
-            driver.get(url)
+            entered_date = start_date + dt.timedelta(days=i)
+            self.enter_info(entered_date, duration, url, i)
 
-            # Entering the date
-            ed = start_date + dt.timedelta(days=i)
-
-            if (ed.weekday() == 5 or ed.weekday() == 6 or str(ed) in national_holiday) and str(ed) not in make_up:
-                print('{} is weekend, Pass'.format(ed))
-                print('---------------------------------------')
-
+    def leader_logging(self, start_date, duration, url):
+        for i in range(int(duration)):
+            entered_date = start_date + dt.timedelta(days=i)
+            if i % 2 == 0:
+                self.enter_info(entered_date, duration, url[0], i)
             else:
-                print('Enter date -> {}'.format(ed))
-                driver.find_element_by_id('time_entry_spent_on').clear()
-                driver.find_element_by_id(
-                    'time_entry_spent_on').send_keys(str(ed))
+                self.enter_info(entered_date, duration, url[1], i)
 
-                # Entering the working time: 8 hours
-                driver.find_element_by_id('time_entry_hours').send_keys('8')
+    def enter_info(self, date, duration, url, day_i):
+        # go to the logging page
+        driver.get(url) 
 
-                # Entering the work location: Taipei
-                driver.find_element_by_id(
-                    'time_entry_working_city').send_keys('Taipei')
+        if (date.weekday() == 5 or date.weekday() == 6) and str(date) not in make_up:
+            print('{} is weekend, Pass'.format(date))
+            print('---------------------------------------')
 
-                # Entering the work type: MY22
-                select_activity = Select(
-                    driver.find_element_by_id('time_entry_activity_id'))
-                select_activity.select_by_index(8)
+        elif str(date) in national_holiday:
+            print('{} is national_holiday, Pass'.format(date))
+            print('---------------------------------------')
 
-                driver.find_element_by_id(
-                    'time_entry_spent_on').send_keys(Keys.ENTER)
+        else:
+            print('Enter date -> {}'.format(date))
+            driver.find_element_by_id('time_entry_spent_on').clear()
+            driver.find_element_by_id(
+                'time_entry_spent_on').send_keys(str(date))
 
-                print('complete logging day {}/{}'.format(i+1, duration))
-                print('---------------------------------------')
+            # Entering the working time: 8 hours
+            driver.find_element_by_id('time_entry_hours').send_keys('8')
 
-        print('Log time completed.')
+            # Entering the work location: Taipei
+            driver.find_element_by_id(
+                'time_entry_working_city').send_keys('Taipei')
+
+            # Entering the work type: MY22
+            select_activity = Select(
+                driver.find_element_by_id('time_entry_activity_id'))
+            select_activity.select_by_index(8)
+
+            driver.find_element_by_id(
+                'time_entry_spent_on').send_keys(Keys.ENTER)
+
+            print('complete logging day {}/{}'.format(day_i + 1, duration))
+            print('---------------------------------------')
+
+
 
 
 log = Logger()
