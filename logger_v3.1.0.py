@@ -14,8 +14,8 @@ with open('name.json', 'r') as f:
 with open('national_holiday.json', 'r') as w:
     exception = json.load(w)
 
-national_holiday = ['2021-' +day for day in exception['holiday_2021']]
-make_up = ['2021-'+ day for day in exception['make_up']]
+national_holiday = ['2021-' + day for day in exception['holiday_2021']]
+make_up = ['2021-' + day for day in exception['make_up']]
 
 
 class Logger:
@@ -23,9 +23,16 @@ class Logger:
         pass
 
     def date_validation(self, first_date):
-        y = int(first_date[:4])
-        m = int(first_date[4:6])
-        d = int(first_date[6:])
+        # if date format is 20210101
+        if len(first_date) == 8:
+            y = int(first_date[:4])
+            m = int(first_date[4:6])
+            d = int(first_date[6:])
+        # if data format is something like 2021-01-01 or 2021.01.01 or 2021/01/01
+        elif len(first_date) == 10:
+            y = int(first_date[:4])
+            m = int(first_date[5:7])
+            d = int(first_date[-2:])
         return dt.date(year=y, month=m, day=d)
 
     def enter(self):
@@ -56,7 +63,7 @@ class Logger:
             self.un_pw()
 
         start_date = input(
-            'The first day you want to log (format: 20201019): ')
+            'The first day you want to log: ')
 
         # Checking the entered date format
         try:
@@ -120,7 +127,7 @@ class Logger:
 
     def enter_info(self, date, duration, url, day_i):
         # go to the logging page
-        driver.get(url) 
+        driver.get(url)
 
         if (date.weekday() == 5 or date.weekday() == 6) and str(date) not in make_up:
             print('{} is weekend, Pass'.format(date))
@@ -153,8 +160,6 @@ class Logger:
 
             print('complete logging day {}/{}'.format(day_i + 1, duration))
             print('---------------------------------------')
-
-
 
 
 log = Logger()
