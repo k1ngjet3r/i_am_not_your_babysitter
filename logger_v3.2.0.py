@@ -49,6 +49,8 @@ class Logger:
 
         # For enter the username and password in terminal
         username, password, url = self.un_pw()
+        first_name = username.split('.')[0]
+
         try:
             print('Entering the user info...')
             user_field = driver.find_element_by_id('username')
@@ -88,8 +90,10 @@ class Logger:
         if conformation == 'y':
             if username in name_list['my22_leader']:
                 self.leader_logging(start_date, duration, url)
+                self.overview(first_name)
             else:
                 self.logging(start_date, duration, url)
+                self.overview(first_name)
 
         else:
             print('Goodbye!')
@@ -160,7 +164,14 @@ class Logger:
 
             print('complete logging day {}/{}'.format(day_i + 1, duration))
             print('---------------------------------------')
-
+        
+    def overview(self, first_name):
+        driver.get(
+                'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/time_entries')
+        time.sleep(3)
+        driver.find_element_by_id('firstname').send_keys(first_name)
+        select_period = Select(driver.find_element_by_id('period'))
+        select_period.select_by_index(1)
 
 log = Logger()
 log.enter()
