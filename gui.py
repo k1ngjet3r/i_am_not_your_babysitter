@@ -1,4 +1,5 @@
 import tkinter as tk
+from PIL import ImageTk, Image
 
 
 def username_password():
@@ -9,8 +10,17 @@ def username_password():
     password = password_entry.get()
     first_date = first_date_entry.get()
     duration = duration_entry.get()
-    confirmation['text'] = 'Log time from {}, total {} days, are you sure?'.format(
-        first_date, duration)
+    if username == '':
+        confirmation['text'] = 'Please enter your username'
+    elif password == '':
+        confirmation['text'] = 'Where is your password'
+    elif first_date == '':
+        confirmation['text'] = 'Enter the first day you want to log motherfucker'
+    elif duration == '':
+        confirmation['text'] = 'Are you kidding me?'
+    else:
+        confirmation['text'] = 'Log time from {}, total {} days, are you sure?'.format(
+            first_date, duration)
 
 
 window = tk.Tk()
@@ -26,10 +36,13 @@ password_entry = tk.Entry(window, show='*')
 first_date_entry = tk.Entry(window)
 duration_entry = tk.Entry(window)
 
-username_entry.grid(row=0, column=1)
-password_entry.grid(row=1, column=1)
-first_date_entry.grid(row=2, column=1)
-duration_entry.grid(row=3, column=1)
+img = ImageTk.PhotoImage(Image.open('dog_meme.jpg'))
+imglabel = tk.Label(window, image=img).grid(row=0, column=1)
+
+username_entry.grid(row=1, column=1)
+password_entry.grid(row=2, column=1)
+first_date_entry.grid(row=3, column=1)
+duration_entry.grid(row=4, column=1)
 
 btn = tk.Button(
     master=window,
@@ -39,7 +52,7 @@ btn = tk.Button(
 
 confirmation = tk.Label(master=window)
 
-btn.grid(row=0, column=2)
+btn.grid(row=1, column=2)
 confirmation.grid(row=5, column=1)
 
 window.mainloop()
