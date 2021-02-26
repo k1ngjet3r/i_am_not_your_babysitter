@@ -6,36 +6,21 @@ import time
 import datetime as dt
 import json
 
+# tell python to open Chrome
 driver = webdriver.Chrome()
-
-with open('name.json', 'r') as f:
-    name_list = json.load(f)
-
-with open('national_holiday.json', 'r') as w:
-    exception = json.load(w)
-
-national_holiday = ['2021-' + day for day in exception['holiday_2021']]
-make_up = ['2021-' + day for day in exception['make_up']]
 
 
 class Logger:
-    def __init__(self):
-        pass
+    def __init__(self, username, password, first_date, duration):
+        self.username = username
+        self.password = password
+        self.first_date = first_date
+        self.duration = duration
 
-    def date_validation(self, first_date):
-        # if date format is 20210101
-        if len(first_date) == 8:
-            y = int(first_date[:4])
-            m = int(first_date[4:6])
-            d = int(first_date[6:])
-        # if data format is something like 2021-01-01 or 2021.01.01 or 2021/01/01
-        elif len(first_date) == 10:
-            y = int(first_date[:4])
-            m = int(first_date[5:7])
-            d = int(first_date[-2:])
-        return dt.date(year=y, month=m, day=d)
+    def login(self):
+        # tell python to open Chrome
+        driver = webdriver.Chrome()
 
-    def enter(self):
         # Open the Redmine using Chrome
         try:
             driver.get(
@@ -49,6 +34,7 @@ class Logger:
 
         # For enter the username and password in terminal
         username, password, url = self.un_pw()
+        
         try:
             print('Entering the user info...')
             user_field = driver.find_element_by_id('username')
@@ -73,31 +59,29 @@ class Logger:
             start_date = input('please intput the correct date: ')
             self.date_validation(start_date)
 
-        duration = input('How many days you want to log? ')
+        # duration = input('How many days you want to log? ')
 
-        start_date = self.date_validation(start_date)
+        # start_date = self.date_validation(start_date)
 
-        end_date = start_date + dt.timedelta(days=int(duration)-1)
+        # end_date = start_date + dt.timedelta(days=int(duration)-1)
 
-        print("So you want to log {} days started from {} to {}?".format(
-            duration, start_date, end_date))
+        # print("So you want to log {} days started from {} to {}?".format(
+            # duration, start_date, end_date))
 
         # Asking the conformation
-        conformation = input('Are you sure (y/n)? ')
+        # conformation = input('Are you sure (y/n)? ')
 
-        if conformation == 'y':
-            if username in name_list['my22_leader']:
-                self.leader_logging(start_date, duration, url)
-            else:
-                self.logging(start_date, duration, url)
-
+        
+        if username in name_list['my22_leader']:
+            self.leader_logging(start_date, duration, url)
         else:
-            print('Goodbye!')
+            self.logging(start_date, duration, url)
+
 
     def un_pw(self):
         url = ''
-        username = input('Enter your username: ')
-        password = input('and your password: ')
+        username = self.username
+        password = self.password
 
         if username in name_list['my22_leader']:
             url_1 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32612/time_entries/new'
