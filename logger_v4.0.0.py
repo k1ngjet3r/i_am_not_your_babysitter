@@ -9,6 +9,20 @@ import json
 # tell python to open Chrome
 driver = webdriver.Chrome()
 
+def list_of_name():
+    with open('name.json', 'r') as f:
+        name_list = json.load(f)
+    return name_list
+
+def exception_list():
+    with open('national_holiday.json', 'r') as w:
+        exception = json.load(w)
+
+    national_holiday = ['2021-' + day for day in exception['holiday_2021']]
+    make_up = ['2021-' + day for day in exception['make_up']]
+    
+    return national_holiday, make_up
+
 
 class Logger:
     def __init__(self, username, password, first_date, duration):
@@ -16,8 +30,11 @@ class Logger:
         self.password = password
         self.first_date = first_date
         self.duration = duration
+    
 
     def login(self):
+        
+
         # tell python to open Chrome
         driver = webdriver.Chrome()
 
