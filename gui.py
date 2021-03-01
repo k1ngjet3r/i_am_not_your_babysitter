@@ -1,45 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.common.by import By
+from logger import Logger
 import time
 import datetime as dt
+from date_format_validation import date_validation
 import json
 import tkinter as tk
-# from PIL import ImageTk, Image
-
-
-with open('name.json', 'r') as f:
-    name_list = json.load(f)
-
-with open('national_holiday.json', 'r') as w:
-    exception = json.load(w)
-
-national_holiday = ['2021-' + day for day in exception['holiday_2021']]
-make_up = ['2021-' + day for day in exception['make_up']]
-
-def date_validation(first_date):
-    # if date format is 20210101
-    if len(first_date) == 8:
-        y = int(first_date[:4])
-        m = int(first_date[4:6])
-        d = int(first_date[6:])
-    # if data format is something like 2021-01-01 or 2021.01.01 or 2021/01/01
-    elif len(first_date) == 10:
-        y = int(first_date[:4])
-        m = int(first_date[5:7])
-        d = int(first_date[-2:])
-    return dt.date(year=y, month=m, day=d)
-
 
 def username_password():
-    """Convert the value for Fahrenheit to Celsius and insert the
-    result into lbl_result.
-    """
+    '''
+        Get the username, password, first_date, and duration from the gui
+    '''
     username = username_entry.get()
     password = password_entry.get()
     first_date = first_date_entry.get()
     duration = duration_entry.get()
+
     if username == '':
         check['text'] = 'Please enter your username'
     elif password == '':
@@ -62,8 +36,8 @@ def username_password():
 
         confirm_btm = tk.Button(
                         master=confirmation_window,
-                        text="Yes, bring it on",
-                        command = Logger(username, password, start_date, duration).enter())
+                        text="Yes, bring it on"
+                        )               
         
         cancel_btm = tk.Button(
                         master=confirmation_window,
@@ -109,3 +83,4 @@ btn.grid(row=3, column=2)
 check.grid(row=5, column=1)
 
 window.mainloop()
+
