@@ -22,6 +22,7 @@ If this is the first time you run this program on this computer, you will need t
 # How to use?
 When you run the script in terminal, a new window will open and terminal will ask you to enter your username and password. After you entered it, the program will login to RedMine and then it will ask you what is the first day you want to log?, how many days you want to log? It will ask for the confirmation. If confirmed, it then start the log time process.
 
+# Version History
 ## Version 4.0
 Introduce GUI for easily entering username, password, start date, and duration.
 
