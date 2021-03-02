@@ -79,7 +79,7 @@ header_label.pack()
 # Image frame
 img_frame = tk.Frame(window)
 img_frame.pack(side=tk.TOP)
-selected_image = Image.open('dog_meme.jpg')
+selected_image = Image.open('dog.jpeg')
 selected_image = selected_image.resize((200, 200), Image.ANTIALIAS)
 img = ImageTk.PhotoImage(selected_image)
 panel = tk.Label(img_frame, image=img)

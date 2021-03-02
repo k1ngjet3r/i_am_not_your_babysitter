@@ -34,6 +34,7 @@ class Logger:
     def start_log_time(self):
         # Connect wifi to GM 5G
         Connect_to_GM5G()
+        time.sleep(3)
         
         # tell python to open Chrome
         driver = webdriver.Chrome("C:\\chromedriver\\chromedriver.exe")
@@ -50,6 +51,7 @@ class Logger:
         # For enter the username and password in terminal
         print('-> Entering username and password')
         username, password, url = self.un_pw()
+        first_name = username.split('.')[0]
         
         try:
             print('-> Entering the user info...')
@@ -68,6 +70,9 @@ class Logger:
             self.leader_logging(self.first_date, self.duration, url, driver)
         else:
             self.logging(self.first_date, self.duration, url, driver)
+        
+        print('Log time completed!, directing to overview!')
+        self.overview(driver, first_name)
 
 
     def un_pw(self):
@@ -146,4 +151,13 @@ class Logger:
             # Output the logging progress
             print('complete logging day {}/{}'.format(day_i + 1, duration))
             print('---------------------------------------')
+
+
+    def overview(self, driver, first_name):
+        driver.get(
+                'http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/time_entries')
+        time.sleep(3)
+        driver.find_element_by_id('firstname').send_keys(first_name)
+        select_period = Select(driver.find_element_by_id('period'))
+        select_period.select_by_index(1)
 
