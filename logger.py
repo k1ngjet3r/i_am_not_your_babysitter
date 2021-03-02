@@ -100,6 +100,7 @@ class Logger:
             self.enter_info(entered_date, duration, url, i, driver)
 
     def leader_logging(self, start_date, duration, url, driver):
+        start_date = date_validation(start_date)
         for i in range(int(duration)):
             entered_date = start_date + dt.timedelta(days=i)
             if i % 2 == 0:
