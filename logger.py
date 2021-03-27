@@ -6,16 +6,16 @@ import time
 import datetime as dt
 import json
 import tkinter as tk
-from connect_to_GM5G import Connect_to_GM5G
-from date_format_validation import date_validation
+from func.connect_to_GM5G import Connect_to_GM5G
+from func.date_format_validation import date_validation
 
 def list_of_name():
-    with open('name.json', 'r') as f:
+    with open('json\\name.json', 'r') as f:
         name_list = json.load(f)
     return name_list
 
 def exception_list():
-    with open('national_holiday.json', 'r') as w:
+    with open('json\\national_holiday.json', 'r') as w:
         exception = json.load(w)
 
     national_holiday = ['2021-' + day for day in exception['holiday_2021']]
