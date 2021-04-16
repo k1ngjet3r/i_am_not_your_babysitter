@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from date_format_validation import date_validation
+from func.date_format_validation import date_validation
 import datetime as dt
 from logger import Logger
 

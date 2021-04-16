@@ -88,6 +88,9 @@ class Logger:
         elif username in list_of_name()['my22']:
             url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new'
 
+        elif username in list_of_name()['automation']:
+            url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32590/time_entries/new'
+
         else:
             print('the url for my23 was not setup yet!')
 
