@@ -45,29 +45,37 @@ def confirmation():
         btn_frame.pack(side=tk.TOP)
 
         confirmation_msg = tk.Label(top_con_frame)
-
-        start_date = date_validation(first_date)
-        end_date = start_date + dt.timedelta(days=int(duration)-1)
-
-        confirmation_msg['text'] = "So you want to log {} days\n started from {} to {}?".format(
-            duration, start_date, end_date)
         
-        confirmation_msg.pack(side=tk.TOP)
+        try:
+            start_date = date_validation(first_date)
+            end_date = start_date + dt.timedelta(days=int(duration)-1)
 
-        confirm_btn = tk.Button(
-                        master=btn_frame,
-                        text="Yes, bring it on",
-                        command=logging_time
-                        )               
-        confirm_btn.pack(side=tk.LEFT, ipadx=20, fill=tk.X)
+            confirmation_msg['text'] = "So you want to log {} days\n started from {} to {}?".format(
+                duration, start_date, end_date)
 
-        cancel_btn = tk.Button(
-                        master=btn_frame,
-                        text="No, I want my mommy",
-                        command=confirmation_window.destroy
-                        )
-        cancel_btn.pack(side=tk.LEFT, ipadx=20, fill=tk.X)
+            confirmation_msg.pack(side=tk.TOP)
 
+            confirm_btn = tk.Button(
+                            master=btn_frame,
+                            text="Yes, bring it on",
+                            command=logging_time
+                            )               
+            confirm_btn.pack(side=tk.LEFT, ipadx=20, fill=tk.X)
+
+            cancel_btn = tk.Button(
+                            master=btn_frame,
+                            text="No, I want my mommy",
+                            command=confirmation_window.destroy
+                            )
+            cancel_btn.pack(side=tk.LEFT, ipadx=20, fill=tk.X)
+
+        except:
+            confirmation_msg['text'] = 'Please enter a correct date format!'
+            confirmation_msg.pack(side=tk.TOP)
+
+            close_btn = tk.Button(master=btn_frame, text='Close', command=confirmation_window.destroy)
+            close_btn.pack()
+            
         confirmation_window.lift()
         
         confirmation_window.mainloop()
