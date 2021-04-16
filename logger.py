@@ -33,11 +33,11 @@ class Logger:
 
     def start_log_time(self):
         # Connect wifi to GM 5G
-        Connect_to_GM5G()
+        # Connect_to_GM5G()
         time.sleep(3)
         
         # tell python to open Chrome
-        driver = webdriver.Chrome("C:\\chromedriver\\chromedriver.exe")
+        driver = webdriver.Chrome()
         time.sleep(2)
 
         # Open the Redmine using Chrome

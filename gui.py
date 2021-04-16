@@ -1,7 +1,7 @@
 from logger import Logger
 import time
 import datetime as dt
-from date_format_validation import date_validation
+from func.date_format_validation import date_validation
 import json
 import tkinter as tk
 
