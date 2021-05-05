@@ -7,16 +7,24 @@ Sick of logging work time on RedMine day by day using your finger? Introducing R
 # Environment setup
 In order to make this work, there are some requirements that need be install on your computer:
 1. Python 3.6+
-2. Selenium module (pip install selenium)
-3. Chromedriver
+2. Chromedriver
+3. Selenium module (pip install selenium)
+4. Pillow module (pip install pillow)
 
 FYI: you need to install the Chromedriver to your installed python directory which is: C:\Users\<your name>\AppData\Local\Programs\Python\<Python version>\
 
 # How this work?
 This program used selenium to control web browser (In this case Chrome) to help you log your time.
 
+# How to install requirement?
+If this is the first time you run this program on this computer, you will need to install all requirments. Fortunately, you don'y have to haunt the modules individually, all you need to do is to execute "requriememt_installer.bat" and it will help you not only the required modules but also the chromedriver.
+
 # How to use?
 When you run the script in terminal, a new window will open and terminal will ask you to enter your username and password. After you entered it, the program will login to RedMine and then it will ask you what is the first day you want to log?, how many days you want to log? It will ask for the confirmation. If confirmed, it then start the log time process.
+
+# Version History
+## Version 4.0
+Introduce GUI for easily entering username, password, start date, and duration.
 
 ## Version 3.0
 Store usernames and national holidays in the form of JSON files separately. Now it can also differentiate the leader and non-leader by usernames stored in the JSON file. It's also possible for MY-23 team members to log time using this file, but at current stage it still need to add the url for logging time, this function should be added by version 3.1.
