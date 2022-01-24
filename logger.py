@@ -18,8 +18,8 @@ def exception_list():
     with open('json\\national_holiday.json', 'r') as w:
         exception = json.load(w)
 
-    national_holiday = ['2021-' + day for day in exception['holiday_2021']]
-    make_up = ['2021-' + day for day in exception['make_up']]
+    national_holiday = ['2022-' + day for day in exception['holiday_2021']]
+    make_up = ['2022-' + day for day in exception['make_up']]
 
     return national_holiday, make_up
 
