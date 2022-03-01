@@ -18,7 +18,7 @@ def exception_list():
     with open('json\\national_holiday.json', 'r') as w:
         exception = json.load(w)
 
-    national_holiday = ['2022-' + day for day in exception['holiday_2021']]
+    national_holiday = ['2022-' + day for day in exception['holiday']]
     make_up = ['2022-' + day for day in exception['make_up']]
 
     return national_holiday, make_up
@@ -34,11 +34,11 @@ class Logger:
     def start_log_time(self):
         # Connect wifi to GM 5G
         # Connect_to_GM5G()
-        time.sleep(3)
+        # time.sleep(3)
 
         # tell python to open Chrome
         driver = webdriver.Chrome()
-        time.sleep(2)
+        # time.sleep(2)
 
         # Open the Redmine using Chrome
         try:
@@ -73,7 +73,6 @@ class Logger:
 
         print('Log time completed!, directing to overview!')
         self.overview(driver, first_name)
-
 
     def un_pw(self):
         url = ''
@@ -155,7 +154,6 @@ class Logger:
             # Output the logging progress
             print('complete logging day {}/{}'.format(day_i + 1, duration))
             print('---------------------------------------')
-
 
     def overview(self, driver, first_name):
         driver.get(
