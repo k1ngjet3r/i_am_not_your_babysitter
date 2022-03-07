@@ -87,8 +87,17 @@ class Logger:
         elif username in list_of_name()['my22']:
             url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new'
 
-        elif username in list_of_name()['automation']:
-            url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32590/time_entries/new'
+        elif username == 'jeter.lin':
+            url_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32587/time_entries/new'
+            url_creation = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32586/time_entries/new'
+            url_leader = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32590/time_entries/new'
+            url = [url_creation, url_maintenance, url_leader]
+
+        elif username == 'logan.chang':
+            url_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32587/time_entries/new'
+            url_creation = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32586/time_entries/new'
+            url_lab_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32584/time_entries/new'
+            url = [url_creation, url_maintenance, url_lab_maintenance]
 
         else:
             print('the url for my23 was not setup yet!')
@@ -162,3 +171,5 @@ class Logger:
         driver.find_element_by_id('firstname').send_keys(first_name)
         select_period = Select(driver.find_element_by_id('period'))
         select_period.select_by_index(1)
+
+
