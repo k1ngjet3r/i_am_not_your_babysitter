@@ -67,7 +67,7 @@ class Logger:
         if username in list_of_name()['my22_leader']:
             self.leader_logging(self.first_date, self.duration, url, driver)
         elif username in list_of_name()['automation']:
-            self.ai_team_4_the_win(self.start_date, self.duration, url, driver)
+            self.ai_team_4_the_win(self.first_date, self.duration, url, driver)
         else:
             self.logging(self.first_date, self.duration, url, driver)
 
@@ -91,13 +91,13 @@ class Logger:
             url_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32587/time_entries/new'
             url_creation = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32586/time_entries/new'
             url_leader = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32590/time_entries/new'
-            urls = [url_creation, url_maintenance, url_leader]
+            url = [url_creation, url_maintenance, url_leader]
 
         elif username == 'logan.chang':
             url_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32587/time_entries/new'
             url_creation = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32586/time_entries/new'
             url_lab_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32584/time_entries/new'
-            urls = [url_creation, url_maintenance, url_lab_maintenance]
+            url = [url_creation, url_maintenance, url_lab_maintenance]
 
         else:
             print('the url for my23 was not setup yet!')
