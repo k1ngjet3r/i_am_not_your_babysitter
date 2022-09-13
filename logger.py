@@ -38,7 +38,7 @@ class Logger:
         # Open the Redmine using Chrome
         try:
             print('-> Directing to Redmine login page')
-            driver.get('http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
+            driver.get(r'https://redmine.mdtc.cienet.com.cn/login?back_url=http%3A%2F%2F127.0.0.1%3A3000%2F')
 
         except:
             print('!!! [ERR] Fail to open Chrome !!!')
@@ -56,7 +56,7 @@ class Logger:
             pw_field = driver.find_element_by_id('password')
             pw_field.send_keys(password)
             loggin_but = driver.find_element_by_xpath(
-                '/html/body/div/div/div[3]/div[2]/div/form/table/tbody/tr[4]/td[2]/input')
+                r'/html/body/div/div[2]/div[1]/div[3]/div[2]/div[1]/form/input[6]')
             loggin_but.send_keys(Keys.RETURN)
         except:
             print('Fail to log in, please check your username and password')
@@ -191,3 +191,5 @@ class Logger:
         select_period.select_by_index(1)
 
 
+if __name__ == '__main__':
+    Logger('jeter.lin', 'sD4T1pDTZp', '20220912', '2').start_log_time()
