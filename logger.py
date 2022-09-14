@@ -32,20 +32,16 @@ class Logger:
         self.duration = duration
 
     def start_log_time(self):
-        # Connect wifi to GM 5G
-        # Connect_to_GM5G()
-        # time.sleep(3)
-
         # tell python to open Chrome
         driver = webdriver.Chrome()
-        # time.sleep(2)
 
         # Open the Redmine using Chrome
         try:
             print('-> Directing to Redmine login page')
-            driver.get('http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/issues')
+            driver.get(r'https://redmine.mdtc.cienet.com.cn/login?back_url=http%3A%2F%2F127.0.0.1%3A3000%2F')
 
         except:
+            print('!!! [ERR] Fail to open Chrome !!!')
             driver.close()
 
         # For enter the username and password in terminal
@@ -60,14 +56,18 @@ class Logger:
             pw_field = driver.find_element_by_id('password')
             pw_field.send_keys(password)
             loggin_but = driver.find_element_by_xpath(
-                '/html/body/div/div/div[3]/div[2]/div/form/table/tbody/tr[4]/td[2]/input')
+                r'/html/body/div/div[2]/div[1]/div[3]/div[2]/div[1]/form/input[6]')
             loggin_but.send_keys(Keys.RETURN)
         except:
             print('Fail to log in, please check your username and password')
             self.un_pw()
 
+        print('--> Log in to Redmine successfully!')
+
         if username in list_of_name()['my22_leader']:
             self.leader_logging(self.first_date, self.duration, url, driver)
+        elif username in list_of_name()['automation']:
+            self.ai_team_4_the_win(self.first_date, self.duration, url, driver)
         else:
             self.logging(self.first_date, self.duration, url, driver)
 
@@ -118,6 +118,24 @@ class Logger:
                 self.enter_info(entered_date, duration, url[0], i, driver)
             else:
                 self.enter_info(entered_date, duration, url[1], i, driver)
+
+    def ai_team_4_the_win(self, start_date, duration, urls, driver):
+        print('''
+        ***********************************
+        |                                 |
+        |<--- Welcome! AI Team Member --->|
+        |                                 |
+        *********************************** 
+        ''')
+        start_date = date_validation(start_date)
+        for i in range(int(duration)):
+            entered_date = start_date + dt.timedelta(days=i)
+            if entered_date.weekday() == 0 or entered_date.weekday() == 1:
+                self.enter_info(entered_date, duration, urls[0], i, driver)
+            elif entered_date.weekday() == 2 or entered_date.weekday() == 3:
+                self.enter_info(entered_date, duration, urls[1], i, driver)
+            else:
+                self.enter_info(entered_date, duration, urls[2], i, driver)
 
     def enter_info(self, date, duration, url, day_i, driver):
         # go to the logging page
@@ -173,3 +191,5 @@ class Logger:
         select_period.select_by_index(1)
 
 
+if __name__ == '__main__':
+    Logger('jeter.lin', 'sD4T1pDTZp', '20220912', '2').start_log_time()
