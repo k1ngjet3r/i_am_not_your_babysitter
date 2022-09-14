@@ -25,8 +25,8 @@ except FileNotFoundError:
     exception_ = read_json(r'json\national_holiday.json')
     link_list = read_json(r'json\links.json')
 
-national_holiday = ['2022-' + day for day in exception['holiday']]
-make_up = ['2022-' + day for day in exception['make_up']]
+national_holiday = ['2022-' + day for day in exception_['holiday']]
+make_up = ['2022-' + day for day in exception_['make_up']]
 
 login_url = link_list['page']['login']
 overview_url = link_list['page']['overview']
