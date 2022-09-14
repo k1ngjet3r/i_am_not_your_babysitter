@@ -1,10 +1,11 @@
 {
-    "lab": {
+    "page": {
+        "login": "https://redmine.mdtc.cienet.com.cn/login?back_url=http%3A%2F%2F127.0.0.1%3A3000%2F",
+        "overview": "http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/time_entries"
+    },
+    "task": {
         "lab_setup": "https://redmine.mdtc.cienet.com.cn/issues/13",
         "lab_maintenance": "https://redmine.mdtc.cienet.com.cn/issues/12",
-        "lab_technical_leader": "https://redmine.mdtc.cienet.com.cn/issues/11"  
-    },
-    "AI": {
         "script_development": "https://redmine.mdtc.cienet.com.cn/issues/42",
         "script_maintenance": "https://redmine.mdtc.cienet.com.cn/issues/37",
         "ai_technical_leader": "https://redmine.mdtc.cienet.com.cn/issues/31"
