@@ -4,10 +4,10 @@
         "overview": "http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/time_entries"
     },
     "task": {
-        "lab_setup": "https://redmine.mdtc.cienet.com.cn/issues/13",
-        "lab_maintenance": "https://redmine.mdtc.cienet.com.cn/issues/12",
-        "script_development": "https://redmine.mdtc.cienet.com.cn/issues/42",
-        "script_maintenance": "https://redmine.mdtc.cienet.com.cn/issues/37",
-        "ai_technical_leader": "https://redmine.mdtc.cienet.com.cn/issues/31"
+        "lab_setup": "https://redmine.mdtc.cienet.com.cn/issues/13/time_entries/new",
+        "lab_maintenance": "https://redmine.mdtc.cienet.com.cn/issues/12/time_entries/new",
+        "script_development": "https://redmine.mdtc.cienet.com.cn/issues/42/time_entries/new",
+        "script_maintenance": "https://redmine.mdtc.cienet.com.cn/issues/37/time_entries/new",
+        "ai_technical_leader": "https://redmine.mdtc.cienet.com.cn/issues/31/time_entries/new"
     }
 }
