@@ -1,7 +1,7 @@
 {
     "page": {
         "login": "https://redmine.mdtc.cienet.com.cn/login?back_url=http%3A%2F%2F127.0.0.1%3A3000%2F",
-        "overview": "http://redmine.mdtc.cienet.com.cn:3000/projects/timesheet/time_entries"
+        "overview": "https://redmine.mdtc.cienet.com.cn/projects/timesheet/time_entries?utf8=%E2%9C%93&set_filter=1&sort=spent_on%3Adesc&f%5B%5D=spent_on&op%5Bspent_on%5D=*&f%5B%5D=user_id&op%5Buser_id%5D=%3D&v%5Buser_id%5D%5B%5D=me&f%5B%5D=&c%5B%5D=spent_on&c%5B%5D=user&c%5B%5D=activity&c%5B%5D=issue&c%5B%5D=comments&c%5B%5D=hours&group_by=&t%5B%5D=hours&t%5B%5D="
     },
     "task": {
         "lab_setup": "https://redmine.mdtc.cienet.com.cn/issues/13/time_entries/new",
@@ -11,5 +11,3 @@
         "ai_technical_leader": "https://redmine.mdtc.cienet.com.cn/issues/31/time_entries/new"
     }
 }
-
-https://redmine.mdtc.cienet.com.cn/projects/timesheet/time_entries?utf8=%E2%9C%93&set_filter=1&sort=spent_on%3Adesc&f%5B%5D=spent_on&op%5Bspent_on%5D=*&f%5B%5D=issue_id&op%5Bissue_id%5D=%3D&v%5Bissue_id%5D%5B%5D=jeter&f%5B%5D=user_id&op%5Buser_id%5D=%3D&v%5Buser_id%5D%5B%5D=me&f%5B%5D=&c%5B%5D=spent_on&c%5B%5D=activity&c%5B%5D=issue&c%5B%5D=comments&c%5B%5D=hours&group_by=&t%5B%5D=hours&t%5B%5D=
