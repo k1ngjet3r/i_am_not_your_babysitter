@@ -7,22 +7,24 @@ from logger import Logger
 window = tk.Tk()
 window.title("I'm Not Your babysitter!")
 
+
 def logging_time():
-    username = username_entry.get()
+    username = username_entry.gppet()
     password = password_entry.get()
     first_date = first_day_entry.get()
-    duration = duration_entry.get()
-    logging = Logger(username, password, first_date, duration)
+    end_date = duration_entry.get()
+    logging = Logger(username, password, first_date, end_date)
     logging.start_log_time()
+
 
 def confirmation():
     '''
-        Get the username, password, first_date, and duration from the gui
+        Get the username, password, first_date, and end_date from the gui
     '''
     username = username_entry.get()
     password = password_entry.get()
     first_date = first_day_entry.get()
-    duration = duration_entry.get()
+    end_date = duration_entry.get()
 
     if username == '':
         error_msg['text'] = 'Please enter your username'
@@ -30,7 +32,7 @@ def confirmation():
         error_msg['text'] = 'Where is your password'
     elif first_date == '':
         error_msg['text'] = 'Enter the first day you want \n to log motherfucker'
-    elif date_validation(first_date) == False:
+    elif date_validation(first_date) == False or date_validation(end_date):
         error_msg['text'] = 'You entered an invalid date, \n please enter a valid date.'
     elif duration == '':
         error_msg['text'] = 'Are you kidding me?'
@@ -48,10 +50,10 @@ def confirmation():
         
         try:
             start_date = date_validation(first_date)
-            end_date = start_date + dt.timedelta(days=int(duration)-1)
+            end_date = date_validation(end_date)
 
-            confirmation_msg['text'] = "So you want to log {} days\n started from {} to {}?".format(
-                duration, start_date, end_date)
+            confirmation_msg['text'] = "So you want to log time from {} to {}?".format(
+                start_date, end_date)
 
             confirmation_msg.pack(side=tk.TOP)
 
@@ -87,7 +89,12 @@ header_label.pack()
 # Image frame
 img_frame = tk.Frame(window)
 img_frame.pack(side=tk.TOP)
-selected_image = Image.open('img\\rick.jpg')
+
+try:
+    selected_image = Image.open('img\\rick.jpg')
+except FileNotFoundError:
+    selected_image = Image.open('img/rick.jpg')
+
 selected_image = selected_image.resize((200, 200), Image.ANTIALIAS)
 img = ImageTk.PhotoImage(selected_image)
 panel = tk.Label(img_frame, image=img)
