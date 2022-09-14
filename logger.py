@@ -14,6 +14,7 @@ def list_of_name():
         name_list = json.load(f)
     return name_list
 
+
 def exception_list():
     with open('json\\national_holiday.json', 'r') as w:
         exception = json.load(w)
@@ -30,6 +31,7 @@ class Logger:
         self.password = password
         self.first_date = first_date
         self.duration = duration
+
 
     def start_log_time(self):
         # tell python to open Chrome
@@ -64,30 +66,21 @@ class Logger:
 
         print('--> Log in to Redmine successfully!')
 
-        if username in list_of_name()['my22_leader']:
-            self.leader_logging(self.first_date, self.duration, url, driver)
-        elif username in list_of_name()['automation']:
+        if self.username == 'jeter.lin' or self.username == 'logan.chang':
             self.ai_team_4_the_win(self.first_date, self.duration, url, driver)
+            print('Log time completed!, directing to overview!')
+            self.overview(driver, first_name)
+        
         else:
-            self.logging(self.first_date, self.duration, url, driver)
+            print('Who the fuck are you?')
 
-        print('Log time completed!, directing to overview!')
-        self.overview(driver, first_name)
 
     def un_pw(self):
         url = ''
         username = self.username
         password = self.password
 
-        if username in list_of_name()['my22_leader']:
-            url_1 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32612/time_entries/new'
-            url_2 = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32613/time_entries/new'
-            url = [url_1, url_2]
-
-        elif username in list_of_name()['my22']:
-            url = 'http://redmine.mdtc.cienet.com.cn:3000/issues/32609/time_entries/new'
-
-        elif username == 'jeter.lin':
+        if username == 'jeter.lin':
             url_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32587/time_entries/new'
             url_creation = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32586/time_entries/new'
             url_leader = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32590/time_entries/new'
@@ -99,10 +92,8 @@ class Logger:
             url_lab_maintenance = r'http://redmine.mdtc.cienet.com.cn:3000/issues/32584/time_entries/new'
             url = [url_creation, url_maintenance, url_lab_maintenance]
 
-        else:
-            print('the url for my23 was not setup yet!')
-
         return username, password, url
+
 
     def logging(self, start_date, duration, url, driver):
         start_date = date_validation(start_date)
@@ -110,14 +101,6 @@ class Logger:
             entered_date = start_date + dt.timedelta(days=i)
             self.enter_info(entered_date, duration, url, i, driver)
 
-    def leader_logging(self, start_date, duration, url, driver):
-        start_date = date_validation(start_date)
-        for i in range(int(duration)):
-            entered_date = start_date + dt.timedelta(days=i)
-            if i % 2 == 0:
-                self.enter_info(entered_date, duration, url[0], i, driver)
-            else:
-                self.enter_info(entered_date, duration, url[1], i, driver)
 
     def ai_team_4_the_win(self, start_date, duration, urls, driver):
         print('''
@@ -136,6 +119,7 @@ class Logger:
                 self.enter_info(entered_date, duration, urls[1], i, driver)
             else:
                 self.enter_info(entered_date, duration, urls[2], i, driver)
+
 
     def enter_info(self, date, duration, url, day_i, driver):
         # go to the logging page
@@ -181,6 +165,7 @@ class Logger:
             # Output the logging progress
             print('complete logging day {}/{}'.format(day_i + 1, duration))
             print('---------------------------------------')
+
 
     def overview(self, driver, first_name):
         driver.get(
