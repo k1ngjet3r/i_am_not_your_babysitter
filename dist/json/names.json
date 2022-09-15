@@ -1,0 +1,96 @@
+{
+    "logan.chang": {
+        "monday": [
+            {
+                "type": "lab_maintenance",
+                "model_year": "my22",
+                "hour": 4
+            },
+            {
+                "type": "lab_maintenance",
+                "model_year": "my23",
+                "hour": 4
+            }
+        ],
+        "tuesday": [
+            {
+                "type": "ai_technical_leader",
+                "model_year": "my22",
+                "hour": 4
+            },
+            {
+                "type": "ai_technical_leader",
+                "model_year": "my23",
+                "hour": 4
+            }
+        ],
+        "wednesday": [
+            {
+                "type": "script_maintenance",
+                "model_year": "my22",
+                "hour": 8
+            }
+        ],
+        "thursday": [
+            {
+                "type": "script_maintenance",
+                "model_year": "my23",
+                "hour": 8
+            }
+        ],
+        "friday": [
+            {
+                "type": "script_maintenance",
+                "model_year": "my22",
+                "hour": 4
+            },
+            {
+                "type": "script_maintenance",
+                "model_year": "my23",
+                "hour": 4
+            }
+        ]
+    },
+    "jeter.lin": {
+        "monday": [
+            {
+                "type": "ai_technical_leader",
+                "model_year": "my22",
+                "hour": 8
+            }
+        ],
+        "tuesday": [
+            {
+                "type": "ai_technical_leader",
+                "model_year": "my23",
+                "hour": 8
+            }
+        ],
+        "wednesday": [
+            {
+                "type": "script_maintenance",
+                "model_year": "my22",
+                "hour": 8
+            }
+        ],
+        "thursday": [
+            {
+                "type": "script_maintenance",
+                "model_year": "my23",
+                "hour": 8
+            }
+        ],
+        "friday": [
+            {
+                "type": "script_maintenance",
+                "model_year": "my22",
+                "hour": 4
+            },
+            {
+                "type": "script_maintenance",
+                "model_year": "my23",
+                "hour": 4
+            }
+        ]
+    }
+}
