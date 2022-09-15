@@ -3,9 +3,11 @@ from PIL import Image, ImageTk
 from func.date_format_validation import date_validation, first_date_and_end_date_validation
 import datetime as dt
 from logger import Logger
+import random
 
 window = tk.Tk()
 window.title("I'm Not Your babysitter!")
+rick_img = str(random.choice(range(1, 43))) + '.jpg'
 
 
 def logging_time():
@@ -95,9 +97,9 @@ img_frame = tk.Frame(window)
 img_frame.pack(side=tk.TOP)
 
 try:
-    selected_image = Image.open('img\\rick.jpg')
+    selected_image = Image.open(f'img\\{rick_img}')
 except FileNotFoundError:
-    selected_image = Image.open('img/rick.jpg')
+    selected_image = Image.open(f'img/{rick_img}')
 
 selected_image = selected_image.resize((200, 200), Image.ANTIALIAS)
 img = ImageTk.PhotoImage(selected_image)
