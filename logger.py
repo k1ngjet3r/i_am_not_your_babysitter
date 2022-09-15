@@ -72,18 +72,13 @@ class Logger:
         print('--> Log in to Redmine successfully!')
 
         if self.username in ['jeter.lin', 'logan.chang']:
-            self.ai_team_4_the_win(self.first_date, self.duration, url, driver)
+            self.ai_team_4_the_win(driver)
             print(' --> Log time completed!, directing to overview!')
             self.overview(driver, first_name)
 
         else:
             print('Who the fuck are you?')
 
-    def logging(self, start_date, duration, url, driver):
-        start_date = date_validation(start_date)
-        for i in range(int(duration)):
-            entered_date = start_date + dt.timedelta(days=i)
-            self.enter_info(entered_date, duration, url, i, driver)
 
     def ai_team_4_the_win(self, driver):
         print('''

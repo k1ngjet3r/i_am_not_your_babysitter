@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from func.date_format_validation import date_validation
+from func.date_format_validation import date_validation, first_date_and_end_date_validation
 import datetime as dt
 from logger import Logger
 
@@ -12,7 +12,7 @@ def logging_time():
     username = username_entry.gppet()
     password = password_entry.get()
     first_date = first_day_entry.get()
-    end_date = duration_entry.get()
+    end_date = end_date_entry.get()
     logging = Logger(username, password, first_date, end_date)
     logging.start_log_time()
 
@@ -24,7 +24,7 @@ def confirmation():
     username = username_entry.get()
     password = password_entry.get()
     first_date = first_day_entry.get()
-    end_date = duration_entry.get()
+    end_date = end_date_entry.get()
 
     if username == '':
         error_msg['text'] = 'Please enter your username'
@@ -32,9 +32,13 @@ def confirmation():
         error_msg['text'] = 'Where is your password'
     elif first_date == '':
         error_msg['text'] = 'Enter the first day you want \n to log motherfucker'
-    elif date_validation(first_date) == False or date_validation(end_date):
-        error_msg['text'] = 'You entered an invalid date, \n please enter a valid date.'
-    elif duration == '':
+    elif not date_validation(first_date):
+        error_msg['text'] = 'You entered an invalid first date, \n please enter a valid date.'
+    elif not date_validation(end_date):
+        error_msg['text'] = 'You entered an invalid end date, \n please enter a valid date.'
+    elif not first_date_and_end_date_validation(first_date, end_date):
+        error_msg['text'] = 'Invaild duration! please check both \n entered first date and end date.'
+    elif end_date == '':
         error_msg['text'] = 'Are you kidding me?'
     else:
         confirmation_window = tk.Toplevel(window)
@@ -112,10 +116,10 @@ username_label = tk.Label(left_frame, text='Username')
 username_label.pack(side=tk.TOP)
 password_label = tk.Label(left_frame, text='Password')
 password_label.pack(side=tk.TOP)
-first_day_label = tk.Label(left_frame, text='First day')
+first_day_label = tk.Label(left_frame, text='First date')
 first_day_label.pack(side=tk.TOP)
-duration_label = tk.Label(left_frame, text='Duration')
-duration_label.pack(side=tk.TOP)
+end_date_label = tk.Label(left_frame, text='End date')
+end_date_label.pack(side=tk.TOP)
 
 # defining frame that containing entry fields
 right_frame = tk.Frame(window)
@@ -127,8 +131,8 @@ password_entry = tk.Entry(right_frame, show='*')
 password_entry.pack(side=tk.TOP)
 first_day_entry = tk.Entry(right_frame)
 first_day_entry.pack(side=tk.TOP)
-duration_entry = tk.Entry(right_frame)
-duration_entry.pack(side=tk.TOP)
+end_date_entry = tk.Entry(right_frame)
+end_date_entry.pack(side=tk.TOP)
 
 # # Execute frame
 # exe_frame = tk.Frame(window)
