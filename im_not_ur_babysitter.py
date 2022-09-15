@@ -9,7 +9,7 @@ window.title("I'm Not Your babysitter!")
 
 
 def logging_time():
-    username = username_entry.gppet()
+    username = username_entry.get()
     password = password_entry.get()
     first_date = first_day_entry.get()
     end_date = end_date_entry.get()
