@@ -8,7 +8,7 @@ import json
 import tkinter as tk
 from func.connect_to_GM5G import Connect_to_GM5G
 from func.date_format_validation import date_validation
-
+from func.chromedriver_updater import update_chromedriver
 
 def read_json(json_dir):
     with open(json_dir) as f:
@@ -49,9 +49,8 @@ class Logger:
             driver.get(login_url)
 
         except:
-            print(
-                '!!![ERROR] Fail to open Chrome! Please check the Chromedriver version')
-            driver.close()
+            print('Fail to open Chrome! Updating the Chromedriver')
+            update_chromedriver()
 
         # For enter the username and password in terminal
         print('-> Entering username and password')
@@ -64,10 +63,11 @@ class Logger:
             pw_field = driver.find_element_by_id('password')
             pw_field.send_keys(self.password)
             loggin_but = driver.find_element_by_xpath(
-                r'/html/body/div/div[2]/div[1]/div[3]/div[2]/div[1]/form/input[6]')
+                r'/html/body/div/div[2]/div[1]/div[3]/div[2]/div[1]/form/input[5]')
             loggin_but.send_keys(Keys.RETURN)
         except:
             print('Fail to log in, please check your username and password')
+            driver.close()
 
         print('--> Log in to Redmine successfully!')
 
@@ -88,17 +88,17 @@ class Logger:
         |                                 |
         *********************************** 
         ''')
-        current_date = date_validation(self.start_date)
+        current_date = date_validation(self.first_date)
         end_date = date_validation(self.end_date)
 
         while current_date < end_date + dt.timedelta(days=1):
-            if (current_date.weekday() == 5 or current_date.weekday() == 6) and str(entered_date) not in make_up:
-                print('{} is weekend, Pass'.format(date))
+            if (current_date.weekday() == 5 or current_date.weekday() == 6) and str(current_date) not in make_up:
+                print('{} is weekend, Pass'.format(current_date))
                 print('---------------------------------------')
 
             # determine the date is national holiday or not
-            elif str(date) in national_holiday:
-                print('{} is national_holiday, Pass'.format(date))
+            elif str(current_date) in national_holiday:
+                print('{} is national_holiday, Pass'.format(current_date))
                 print('---------------------------------------')
 
             else:
@@ -111,21 +111,28 @@ class Logger:
                     type_ = detail['type']
                     model_year = detail['model_year']
                     hour = detail['hour']
-                    url = link_list["task"][type_]
+                    
 
-                    enter_info(date=current_date, url=url, model_year=model_year, entry_hour=hour, driver=driver)
+                    self.enter_info(date=current_date, type_=type_, model_year=model_year, entry_hour=hour, driver=driver)
             
             current_date += dt.timedelta(days=1)
 
-    def enter_info(self, date, url, model_year, entry_hour, driver):
+    def enter_info(self, date, type_, model_year, entry_hour, driver):
         # go to the logging page
+        url = link_list["task"][type_]
         driver.get(url)
+
+        year, month, day = str(date).split('-')
+        entered_date = month + day + year
 
         # Entering the date
         print('Enter date -> {}'.format(date))
+        print(f'Type: {type_}')
+        print(f'Model: {model_year}')
+        print(f'Entry Hour: {entry_hour}')
         driver.find_element_by_id('time_entry_spent_on').clear()
         driver.find_element_by_id(
-            'time_entry_spent_on').send_keys(str(date))
+            'time_entry_spent_on').send_keys(entered_date)
 
         # Entering the working time
         driver.find_element_by_id('time_entry_hours').send_keys(str(entry_hour))
@@ -133,9 +140,9 @@ class Logger:
         # Entering the work type: MY22
         select_activity = Select(driver.find_element_by_id('time_entry_activity_id'))
         if model_year == 'my22':
-            select_activity.select_by_index(19)
+            select_activity.select_by_value('19')
         elif model_year == 'my23':
-            select_activity.select_by_index(13)
+            select_activity.select_by_value('13')
 
         # submit the log
         driver.find_element_by_id(
@@ -147,10 +154,6 @@ class Logger:
 
     def overview(self, driver, first_name):
         driver.get(overview_url)
-        time.sleep(3)
-        driver.find_element_by_id('firstname').send_keys(first_name)
-        select_period = Select(driver.find_element_by_id('period'))
-        select_period.select_by_index(1)
 
 
 if __name__ == '__main__':
