@@ -144,6 +144,10 @@ class Logger:
         elif model_year == 'my23':
             select_activity.select_by_value('13')
 
+        # Selecting component
+        select_component = Select(driver.find_element_by_id('time_entry_custom_field_values_48'))
+        select_component.select_by_value('Android')
+
         # submit the log
         driver.find_element_by_id(
             'time_entry_spent_on').send_keys(Keys.ENTER)
@@ -157,4 +161,4 @@ class Logger:
 
 
 if __name__ == '__main__':
-    Logger(username='', password='', first_date='', end_date='').start_log_time()
+    Logger(username='jeter.lin', password='sD4T1pDTZp', first_date='20220926', end_date='20221214').start_log_time()
