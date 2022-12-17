@@ -1,14 +1,12 @@
+import json
+import datetime as dt
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
-import time
-import datetime as dt
-import json
-import tkinter as tk
-from func.connect_to_GM5G import Connect_to_GM5G
 from func.date_format_validation import date_validation
 from func.chromedriver_updater import update_chromedriver
+
 
 def read_json(json_dir):
     with open(json_dir) as f:
@@ -25,8 +23,8 @@ except FileNotFoundError:
     exception_ = read_json(r'json\national_holiday.json')
     link_list = read_json(r'json\links.json')
 
-national_holiday = ['2022-' + day for day in exception_['holiday']]
-make_up = ['2022-' + day for day in exception_['make_up']]
+national_holiday = ['2023-' + day for day in exception_['holiday']]
+make_up = ['2023-' + day for day in exception_['make_up']]
 
 login_url = link_list['page']['login']
 overview_url = link_list['page']['overview']
@@ -38,6 +36,7 @@ class Logger:
         self.password = password
         self.first_date = first_date
         self.end_date = end_date
+
 
     def start_log_time(self):
         # tell python to open Chrome
@@ -71,7 +70,7 @@ class Logger:
 
         print('--> Log in to Redmine successfully!')
 
-        if self.username in ['jeter.lin', 'logan.chang']:
+        if self.username in name_list:
             self.ai_team_4_the_win(driver)
             print(' --> Log time completed!, directing to overview!')
             self.overview(driver, first_name)
@@ -91,31 +90,33 @@ class Logger:
         current_date = date_validation(self.first_date)
         end_date = date_validation(self.end_date)
 
-        while current_date < end_date + dt.timedelta(days=1):
-            if (current_date.weekday() == 5 or current_date.weekday() == 6) and str(current_date) not in make_up:
-                print('{} is weekend, Pass'.format(current_date))
-                print('---------------------------------------')
+        if (current_date and end_date) and current_date.year == int(exception_["year"]) and end_date.year == int(exception_["year"]):
+            while current_date < end_date + dt.timedelta(days=1):
+                if (current_date.weekday() == 5 or current_date.weekday() == 6) and str(current_date) not in make_up:
+                    print('{} is weekend, Pass'.format(current_date))
+                    print('---------------------------------------')
 
-            # determine the date is national holiday or not
-            elif str(current_date) in national_holiday:
-                print('{} is national_holiday, Pass'.format(current_date))
-                print('---------------------------------------')
+                # determine the date is national holiday or not
+                elif str(current_date) in national_holiday:
+                    print('{} is national_holiday, Pass'.format(current_date))
+                    print('---------------------------------------')
 
-            else:
-                weekday = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
-                current_weekday = weekday[current_date.weekday()]
+                else:
+                    weekday = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
+                    current_weekday = weekday[current_date.weekday()]
 
-                usr_log_info = name_list[self.username][current_weekday]
+                    usr_log_info = name_list[self.username][current_weekday]
 
-                for detail in usr_log_info:
-                    type_ = detail['type']
-                    model_year = detail['model_year']
-                    hour = detail['hour']
-                    
+                    for detail in usr_log_info:
+                        type_ = detail['type']
+                        model_year = detail['model_year']
+                        hour = detail['hour']
+                        
 
-                    self.enter_info(date=current_date, type_=type_, model_year=model_year, entry_hour=hour, driver=driver)
-            
-            current_date += dt.timedelta(days=1)
+                        self.enter_info(date=current_date, type_=type_, model_year=model_year, entry_hour=hour, driver=driver)
+                
+                current_date += dt.timedelta(days=1)
+
 
     def enter_info(self, date, type_, model_year, entry_hour, driver):
         # go to the logging page
@@ -156,9 +157,10 @@ class Logger:
         print('complete logging day {}'.format(date))
         print('---------------------------------------')
 
+
     def overview(self, driver, first_name):
         driver.get(overview_url)
 
 
 if __name__ == '__main__':
-    Logger(username='jeter.lin', password='sD4T1pDTZp', first_date='20220926', end_date='20221214').start_log_time()
+    Logger(username='', password='', first_date='', end_date=' ').start_log_time()
