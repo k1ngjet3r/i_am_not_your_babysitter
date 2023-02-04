@@ -23,14 +23,23 @@ def date_validation(date):
     except:
         return False
 
-def first_date_and_end_date_validation(first_date, end_date):
-    first_date = date_validation(first_date)
+def start_date_and_end_date_validation(start_date, end_date):
+    if not start_date or not end_date:
+        return 'Start date or end date cannot be left empty'
+
+    start_date = date_validation(start_date)
     end_date = date_validation(end_date)
 
-    if first_date >= end_date:
-        return False
+    if not start_date:
+        return 'Worng start date format'
+    if not end_date:
+        return 'Worng end date format'
+
+
+    if start_date > end_date:
+        return 'Start date should be earlier than end date'
     return True
 
 
 if __name__ == '__main__':
-    print(first_date_and_end_date_validation('20221208', '20221208'))
+    print(start_date_and_end_date_validation('20221208', '20221208'))
