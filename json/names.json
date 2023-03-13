@@ -91,6 +91,18 @@
                 "model_year": "my23",
                 "hour": 4
             }
+        ],
+        "saturday": [
+            {
+                "type": "ai_technical_leader",
+                "model_year": "my22",
+                "hour": 4
+            },
+            {
+                "type": "ai_technical_leader",
+                "model_year": "my23",
+                "hour": 4
+            }
         ]
     }
 }
