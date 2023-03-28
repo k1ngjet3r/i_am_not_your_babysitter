@@ -1,6 +1,6 @@
 import flet as ft
 from func import date_format_validation
-from logger import Logger
+from src.logger import Logger
 
 def main(page: ft.Page):
     # page setup
