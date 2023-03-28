@@ -2,7 +2,7 @@ import json
 import datetime
 
 
-with open('json/national_holiday.json') as f:
+with open('src/json/national_holiday.json') as f:
     EXCEPTION_DATE = json.load(f)
 
 NATIONAL_HOLIDAY = [EXCEPTION_DATE['year'] + day for day in EXCEPTION_DATE['holiday']]
