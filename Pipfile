@@ -7,6 +7,8 @@ name = "pypi"
 flet = "*"
 selenium = "*"
 pillow = "*"
+requests = "*"
+wget = "*"
 
 [dev-packages]
 
