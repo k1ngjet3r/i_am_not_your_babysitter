@@ -2,7 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from func.date_format_validation import date_validation, first_date_and_end_date_validation
 import datetime as dt
-from logger import Logger
+from src.logger import Logger
 import random
 
 window = tk.Tk()
